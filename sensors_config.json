@@ -1,0 +1,15 @@
+[
+  {
+    "serialNumber": "QK6A-JI6S",
+    "interval": 900,
+    "sensorType": "temp",
+    "unit": "Celsius_degree"
+  },
+    {
+    "serialNumber": "QK6A-JI9Q",
+    "interval": 3600,
+    "sensorType": "temp",
+    "unit": "Celsius_degree"
+  }
+
+  ]
