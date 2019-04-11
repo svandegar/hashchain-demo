@@ -18,12 +18,20 @@ ETH_PUBLIC_KEY = os.environ.get('ETH_PUBLIC_KEY')
 ETH_PROVIDER_URL = os.environ.get('ETH_PROVIDER_URL')
 MONGO_CONNECTION_STRING = os.environ.get('MONGO_CONNECTION_STRING')
 
-eth_keys = ['timestamp', 'sensorId', 'value']
+eth_keys = ['sensorId']
+
+# Simulate inputs
+simulation = []
+for _ in range(1000):
+    simulation.append(round(3.899 + (random.random() / 10), 2))
+simulation[30] = 4.01
 
 # Get mongo collection
 client = pymongo.MongoClient(MONGO_CONNECTION_STRING)
 db = client['hashchain-demo']
 sensors = db.sensors
+
+sensors.delete_many({})
 
 # Build Ethereum connector
 connector = ethereum.EthConnector(
@@ -35,19 +43,17 @@ connector = ethereum.EthConnector(
 )
 
 
-class Gateway():
+class Simulator():
 
     def __init__(self, mongo_collection, ethereum_connector):
         self.eth_keys = eth_keys
         self.collection = mongo_collection
         self.connector = ethereum_connector
 
-    def generate_data(self, sensor_id):
-        temp = random.randrange(19, 21) + random.random()
-
+    def generate_data(self, sensor_id, i):
         self.data = dict(timestamp=time.time(),
                          sensorId=sensor_id,
-                         value=temp)
+                         value=simulation[i])
 
     def hash(self):
         try:
@@ -61,38 +67,51 @@ class Gateway():
     def register_on_blockchain(self, eth_keys: list):
         eth_key = {x: self.record.get_content()[x] for x in eth_keys}.__str__()
         try:
-            self.connector.record(eth_key, self.record.get_hash(), wait=True)
+            return self.connector.record(eth_key, self.record.get_hash(), wait=True).hex()
 
         except ValueError:
-            self.connector.record(eth_key, self.record.get_hash(), wait=True)
+            return self.connector.record(eth_key, self.record.get_hash(), wait=True).hex()
 
     async def run(self,
                   frequency: int,
                   sensor_id: str,
                   eth_keys: list,
-                  threshold: int,
-                  max_iter=float('inf')
-                  ):
-        count = 0
+                  validation_interval: int,
+                  max_iter=float('inf'),
+                  threshold=float('inf')):
+        count = 1
         while count < max_iter:
             start = time.time()
-            self.generate_data(sensor_id)
+            self.generate_data(sensor_id, count)
+            print(f"{sensor_id}: value = {self.data['value']}")
             self.hash()
             self.collection.insert_one(self.record.to_dict())
-            if self.data['temperature'] >= threshold:
-                self.register_on_blockchain(eth_keys)
-            print(sensor_id, count)
+
+            if self.data['value'] >= threshold:
+                print(f'Threshold ({threshold}) reached. Register record on blockchain')
+                txn_hash = self.register_on_blockchain(eth_keys)
+                print(f"Transaction hash: {txn_hash}")
+
+            elif count % validation_interval == 0:
+                print(f'Register record on blockchain')
+                txn_hash = self.register_on_blockchain(eth_keys)
+                print(f"Transaction hash: {txn_hash}")
+
             end = time.time()
             count += 1
-            await asyncio.sleep(max(1, frequency - (end - start)))
+            await asyncio.sleep(max(0.01, frequency - (end - start)))
 
 
 # Run script
 async def main():
     tasks = []
-    gateway = Gateway(mongo_collection=sensors, ethereum_connector=connector)
+    simulator = Simulator(mongo_collection=sensors, ethereum_connector=connector)
     for sensor in sensors_config:
-        task = asyncio.create_task(gateway.run(sensor['interval'], sensor['serialNumber'], eth_keys))
+        task = asyncio.create_task(simulator.run(sensor['interval'],
+                                                 sensor['serialNumber'],
+                                                 eth_keys,
+                                                 threshold=4,
+                                                 validation_interval=60))
         tasks.append(task)
     await asyncio.gather(*tasks)
 

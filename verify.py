@@ -37,17 +37,19 @@ def verify(key, value, mongo_collection, ethereum_connector, eth_keys: list):
                                       {"_id": 0}).sort([("timestamp", 1)])
 
         db_records = list(chain)
+
         # Verify the haschain from the DB
+        if records.verify(list(chain)):
 
-        valid = records.verify(list(chain))
-
-        # Verify the last hash on chain
-        last_db_record = db_records[-1]
-        eth_key = {x: last_db_record[x] for x in eth_keys}.__str__()
-        last_eth_hash = ethereum_connector.getRecord(eth_key)
-
-        if last_db_record['hash'] == last_eth_hash:
-            return valid
+            # Verify the last hash on chain
+            last_db_record = db_records[-1]
+            eth_key = {x: last_db_record[x] for x in eth_keys}
+            # db_record = mongo_collection.find(eth_key)
+            # db_hash = db_record[0]['hash']
+            last_eth_hash = ethereum_connector.get_record(eth_key.__str__())
+            last_valid_db_record = mongo_collection.find_one({key: value,'hash':last_eth_hash},
+                                                         {"_id": 0})
+            return last_valid_db_record
 
         else:
             return False
@@ -60,16 +62,19 @@ def verify(key, value, mongo_collection, ethereum_connector, eth_keys: list):
 
 def main():
     for sensor in sensors_config:
-        result = verify(key='sensorId',
+        last_valid_record = verify(key='sensorId',
                         value=sensor['serialNumber'],
                         mongo_collection=sensors,
                         ethereum_connector=connector,
-                        eth_keys=['timestamp', 'sensorId', 'value'])
+                        eth_keys=['sensorId'])
 
-        if result:
-            print(f"Chain integrity for sensor {sensor['serialNumber']}: OK")
+        if last_valid_record:
+            print(f"Chain integrity for sensor {sensor['serialNumber']}: OK.")
+            print(f"Last record registered on blockchain: {json.dumps(last_valid_record, indent=4)}")
+            print('===========================================================')
+
         else:
-            print(f"Chain integrity for sensor {sensor}: NOK")
-
-
+            print(f"Chain integrity for sensor {sensor['serialNumber']}: NOK")
+            print(f"Last record registered on blockchain: {json.dumps(last_valid_record, indent=4)}")
+            print('===========================================================')
 main()
