@@ -1,5 +1,5 @@
 from hashchain import records, ethereum
-import time
+from datetime import datetime
 import random
 import pymongo
 import os
@@ -51,7 +51,7 @@ class Simulator():
         self.connector = ethereum_connector
 
     def generate_data(self, sensor_id, i):
-        self.data = dict(timestamp=time.time(),
+        self.data = dict(timestamp=datetime.now(),
                          sensorId=sensor_id,
                          value=simulation[i])
 
@@ -81,25 +81,25 @@ class Simulator():
                   threshold=float('inf')):
         count = 1
         while count < max_iter:
-            start = time.time()
+            start = datetime.now()
             self.generate_data(sensor_id, count)
-            print(f"{sensor_id}: value = {self.data['value']}")
+            print("{}: value = {}".format(sensor_id,self.data['value']))
             self.hash()
             self.collection.insert_one(self.record.to_dict())
 
             if self.data['value'] >= threshold:
                 print(f'Threshold ({threshold}) reached. Register record on blockchain')
                 txn_hash = self.register_on_blockchain(eth_keys)
-                print(f"Transaction hash: {txn_hash}")
+                print("Transaction hash: {}".format(txn_hash))
 
             elif count % validation_interval == 0:
                 print(f'Register record on blockchain')
                 txn_hash = self.register_on_blockchain(eth_keys)
-                print(f"Transaction hash: {txn_hash}")
+                print("Transaction hash: {}".format(txn_hash))
 
-            end = time.time()
+            end = datetime.now()
             count += 1
-            await asyncio.sleep(max(0.01, frequency - (end - start)))
+            await asyncio.sleep(max(0.01, frequency - (end - start).total_seconds()))
 
 
 # Run script
