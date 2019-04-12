@@ -88,12 +88,12 @@ class Simulator():
             self.collection.insert_one(self.record.to_dict())
 
             if self.data['value'] >= threshold:
-                print(f'Threshold ({threshold}) reached. Register record on blockchain')
+                print('Threshold ({}) reached. Register record on blockchain'.format(threshold))
                 txn_hash = self.register_on_blockchain(eth_keys)
                 print("Transaction hash: {}".format(txn_hash))
 
             elif count % validation_interval == 0:
-                print(f'Register record on blockchain')
+                print('Register record on blockchain')
                 txn_hash = self.register_on_blockchain(eth_keys)
                 print("Transaction hash: {}".format(txn_hash))
 
@@ -107,7 +107,7 @@ async def main():
     tasks = []
     simulator = Simulator(mongo_collection=sensors, ethereum_connector=connector)
     for sensor in sensors_config:
-        task = asyncio.create_task(simulator.run(sensor['interval'],
+        task = asyncio.ensure_future(simulator.run(sensor['interval'],
                                                  sensor['serialNumber'],
                                                  eth_keys,
                                                  threshold=4,
@@ -116,4 +116,5 @@ async def main():
     await asyncio.gather(*tasks)
 
 
-asyncio.run(main())
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
