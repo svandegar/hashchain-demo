@@ -8,7 +8,7 @@
   },
   {
     "serialNumber": "QK6A-JI9Q",
-    "interval": 3600,
+    "interval": 15,
     "sensorType": "temp",
     "unit": "Celsius_degree",
     "threshold": 21

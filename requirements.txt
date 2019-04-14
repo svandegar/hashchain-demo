@@ -3,6 +3,7 @@ attrdict==2.0.1
 Babel==2.6.0
 certifi==2019.3.9
 chardet==3.0.4
+colorzero==1.1
 cytoolz==0.9.0.1
 dnspython==1.16.0
 docutils==0.14
@@ -14,6 +15,7 @@ eth-keys==0.2.1
 eth-rlp==0.1.2
 eth-typing==2.1.0
 eth-utils==1.4.1
+gpiozero==1.5.0
 hashchain==0.8.0
 hexbytes==0.1.0
 idna==2.8
@@ -31,6 +33,7 @@ pysha3==1.0.2
 pytz==2019.1
 requests==2.21.0
 rlp==1.1.0
+RPi.GPIO==0.6.5
 six==1.12.0
 snowballstemmer==1.2.1
 toolz==0.9.0
