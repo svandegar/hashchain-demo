@@ -67,7 +67,7 @@ class Gateway():
         self.data = dict(timestamp=datetime.now(),
                          sensorId=id,
                          value=temperature)
-        print("Sensor: {} - Current temperature: {}C".format(id, temperature))
+        print("Sensor: {} - Current temperature: {} C".format(id, temperature))
 
     def hash(self):
         try:
@@ -80,11 +80,7 @@ class Gateway():
 
     def register_on_blockchain(self, eth_keys: list):
         eth_key = {x: self.record.get_content()[x] for x in eth_keys}.__str__()
-        try:
-            return self.connector.record(eth_key, self.record.get_hash(), wait=True).hex()
-
-        except ValueError:
-            return self.connector.record(eth_key, self.record.get_hash(), wait=True).hex()
+        return self.connector.record(eth_key, self.record.get_hash(), wait=True).hex()
 
     def run(self,
                   frequency: int,

@@ -9,7 +9,7 @@ ETH_PUBLIC_KEY = os.environ.get('ETH_PUBLIC_KEY')
 ETH_PROVIDER_URL = os.environ.get('ETH_PROVIDER_URL')
 MONGO_CONNECTION_STRING = os.environ.get('MONGO_CONNECTION_STRING')
 
-with open('sensors_config.json') as file:
+with open('simulator_config.json') as file:
     sensors_config = json.load(file)
 
 with open('contract_interface.JSON') as file:

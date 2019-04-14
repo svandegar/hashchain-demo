@@ -7,7 +7,7 @@ import json
 import asyncio
 
 # Get inputs
-with open('sensors_config.json') as file:
+with open('simulator_config.json') as file:
     sensors_config = json.load(file)
 
 with open('contract_interface.JSON') as file:
