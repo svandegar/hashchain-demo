@@ -37,8 +37,8 @@ def verify(key, value, mongo_collection, ethereum_connector, eth_keys: list):
         db_records = list(chain)
 
         # Verify the haschain from the DB
-        foo = records.verify(db_records)
-        if foo:
+        is_valid = records.verify(db_records)
+        if is_valid:
 
             # Verify the last hash on chain
             last_db_record = db_records[-1]

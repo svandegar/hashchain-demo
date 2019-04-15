@@ -130,5 +130,7 @@ def main():
 
 
 
-
-main()
+try:
+    main()
+except KeyboardInterrupt:
+    print('Script ended')
