@@ -59,6 +59,7 @@ def verify(key, value, mongo_collection, ethereum_connector, eth_keys: list):
 
 
 def main():
+    print('Verification in progress ...')
     for sensor in sensors:
         last_valid_record = verify(key='sensorId',
                         value=sensor,
@@ -77,4 +78,5 @@ def main():
             print("Last record registered on blockchain:")
             pprint(last_valid_record, indent=4)
             print('===========================================================')
+
 main()
