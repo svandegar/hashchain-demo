@@ -9,16 +9,15 @@ ETH_PUBLIC_KEY = os.environ.get('ETH_PUBLIC_KEY')
 ETH_PROVIDER_URL = os.environ.get('ETH_PROVIDER_URL')
 MONGO_CONNECTION_STRING = os.environ.get('MONGO_CONNECTION_STRING')
 
-with open('simulator_config.json') as file:
-    sensors_config = json.load(file)
-
 with open('contract_interface.JSON') as file:
     contract_interface = json.load(file)
+
+sensors =["28-041780c449ff"]
 
 # Get mongo collection
 client = pymongo.MongoClient(MONGO_CONNECTION_STRING)
 db = client['hashchain-demo']
-sensors = db.sensors
+data = db.data
 
 # Build Ethereum connector
 connector = ethereum.EthConnector(
@@ -33,12 +32,13 @@ connector = ethereum.EthConnector(
 def verify(key, value, mongo_collection, ethereum_connector, eth_keys: list):
     try:
         chain = mongo_collection.find({key: value},
-                                      {"_id": 0}).sort([("timestamp", 1)])
+                                      {"_id": 0}).sort([("timestamp", -1)])
 
         db_records = list(chain)
 
         # Verify the haschain from the DB
-        if records.verify(list(chain)):
+        foo = records.verify(db_records)
+        if foo:
 
             # Verify the last hash on chain
             last_db_record = db_records[-1]
@@ -59,21 +59,21 @@ def verify(key, value, mongo_collection, ethereum_connector, eth_keys: list):
 
 
 def main():
-    for sensor in sensors_config:
+    for sensor in sensors:
         last_valid_record = verify(key='sensorId',
-                        value=sensor['serialNumber'],
-                        mongo_collection=sensors,
+                        value=sensor,
+                        mongo_collection=data,
                         ethereum_connector=connector,
                         eth_keys=['sensorId'])
 
         if last_valid_record:
-            print("Chain integrity for sensor {}: VALID".format(sensor['serialNumber']))
+            print("Chain integrity for sensor {}: VALID".format(sensor))
             print("Last record registered on blockchain:")
             pprint(last_valid_record, indent=4)
             print('===========================================================')
 
         else:
-            print("Chain integrity for sensor {}: NOT VALID".format(sensor['serialNumber']))
+            print("Chain integrity for sensor {}: NOT VALID".format(sensor))
             print("Last record registered on blockchain:")
             pprint(last_valid_record, indent=4)
             print('===========================================================')

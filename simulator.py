@@ -29,7 +29,7 @@ simulation[30] = 4.01
 # Get mongo collection
 client = pymongo.MongoClient(MONGO_CONNECTION_STRING)
 db = client['hashchain-demo']
-sensors = db.sensors
+sensors = db.simulation
 
 sensors.delete_many({})
 
@@ -51,7 +51,7 @@ class Simulator():
         self.connector = ethereum_connector
 
     def generate_data(self, sensor_id, i):
-        self.data = dict(timestamp=datetime.now(),
+        self.data = dict(timestamp=datetime.now().replace(microsecond=0),
                          sensorId=sensor_id,
                          value=simulation[i])
 
@@ -85,7 +85,8 @@ class Simulator():
             self.generate_data(sensor_id, count)
             print("{}: value = {}".format(sensor_id,self.data['value']))
             self.hash()
-            self.collection.insert_one(self.record.to_dict())
+            foo = self.record.to_dict()
+            self.collection.insert_one(foo)
 
             if self.data['value'] >= threshold:
                 print('Threshold ({}) reached. Register record on blockchain'.format(threshold))

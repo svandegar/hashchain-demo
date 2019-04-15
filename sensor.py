@@ -64,7 +64,7 @@ class Gateway():
         secondline = text.split("\n")[1]
         temperature_data = secondline.split(" ")[9]
         temperature = float(temperature_data[2:]) / 1000
-        self.data = dict(timestamp=datetime.now(),
+        self.data = dict(timestamp=datetime.now().replace(microsecond=0),
                          sensorId=id,
                          value=temperature)
         print("Sensor: {} - Current temperature: {} C".format(id, temperature))

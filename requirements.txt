@@ -16,7 +16,7 @@ eth-rlp==0.1.2
 eth-typing==2.1.0
 eth-utils==1.4.1
 gpiozero==1.5.0
-hashchain==0.8.0
+hashchain==0.8.4
 hexbytes==0.1.0
 idna==2.8
 imagesize==1.1.0

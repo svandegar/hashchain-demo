@@ -10,6 +10,7 @@
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/venv3.5" />
             <excludedPath path="/dev/hashchain-demo/venv" />
+            <excludedPath local="true" path="$PROJECT_DIR$/venv" />
           </excludedPaths>
         </serverdata>
       </paths>
