@@ -24,14 +24,17 @@ except FileNotFoundError:
     contract.deploy(ETH_PUBLIC_KEY, ETH_PRIVATE_KEY, ETH_PROVIDER_URL)
     contract.get_txn_receipt()
     print('Contract deployed. Address: {}'.format(contract.address))
+    with open('contract_interface.JSON', 'w+') as file:
+        json.dump(dict(address=contract.address, abi=contract.abi), file)
 
 
 # Get mongo collection
+print('Open database connection')
 client = pymongo.MongoClient(MONGO_CONNECTION_STRING)
 db = client['hashchain-demo']
 data = db.data
 
-data.delete_many({})
+data.delete_many({}) # this is just to avoid spoiling the database with demo data
 
 # Build Ethereum connector
 connector = ethereum.EthConnector(
@@ -125,6 +128,7 @@ class Gateway():
 
 # Run script
 def main():
+    print('Start reading sensors...')
     pi = Gateway(mongo_collection=data, ethereum_connector=connector)
     pi.run(frequency=1, eth_keys=eth_keys,validation_interval=60,threshold=30)
 
@@ -133,4 +137,4 @@ def main():
 try:
     main()
 except KeyboardInterrupt:
-    print('Script ended')
+    print('\nScript ended by user')
