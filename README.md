@@ -1,4 +1,4 @@
-# Hashchain
+# Hashchain-demo
 This repos contains a script used to demo the [`hashchain` Python package](https://pypi.org/project/hashchain/).
 This demo was meant to run on a Raspberry Pi 3 B+
 
