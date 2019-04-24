@@ -29,7 +29,6 @@ except FileNotFoundError:
 
 
 # Get mongo collection
-print('Open database connection')
 client = pymongo.MongoClient(MONGO_CONNECTION_STRING)
 db = client['hashchain-demo']
 data = db.data
