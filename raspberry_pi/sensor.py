@@ -44,7 +44,6 @@ connector = ethereum.EthConnector(
     provider_url=ETH_PROVIDER_URL
 )
 
-
 class Gateway():
 
     def __init__(self, mongo_collection, ethereum_connector):

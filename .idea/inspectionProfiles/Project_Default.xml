@@ -4,7 +4,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="42">
+          <list size="91">
             <item index="0" class="java.lang.String" itemvalue="lru-dict" />
             <item index="1" class="java.lang.String" itemvalue="hexbytes" />
             <item index="2" class="java.lang.String" itemvalue="Babel" />
@@ -47,6 +47,55 @@
             <item index="39" class="java.lang.String" itemvalue="pytz" />
             <item index="40" class="java.lang.String" itemvalue="eth-utils" />
             <item index="41" class="java.lang.String" itemvalue="idna" />
+            <item index="42" class="java.lang.String" itemvalue="atomicwrites" />
+            <item index="43" class="java.lang.String" itemvalue="python-dateutil" />
+            <item index="44" class="java.lang.String" itemvalue="psycopg2" />
+            <item index="45" class="java.lang.String" itemvalue="py" />
+            <item index="46" class="java.lang.String" itemvalue="pycairo" />
+            <item index="47" class="java.lang.String" itemvalue="python-magic" />
+            <item index="48" class="java.lang.String" itemvalue="guzzle-sphinx-theme" />
+            <item index="49" class="java.lang.String" itemvalue="pycryptodomex" />
+            <item index="50" class="java.lang.String" itemvalue="scandir" />
+            <item index="51" class="java.lang.String" itemvalue="trytond" />
+            <item index="52" class="java.lang.String" itemvalue="bleach" />
+            <item index="53" class="java.lang.String" itemvalue="lxml" />
+            <item index="54" class="java.lang.String" itemvalue="sphinxcontrib-websupport" />
+            <item index="55" class="java.lang.String" itemvalue="readme-renderer" />
+            <item index="56" class="java.lang.String" itemvalue="Werkzeug" />
+            <item index="57" class="java.lang.String" itemvalue="wrapt" />
+            <item index="58" class="java.lang.String" itemvalue="cryptography" />
+            <item index="59" class="java.lang.String" itemvalue="SecretStorage" />
+            <item index="60" class="java.lang.String" itemvalue="attrs" />
+            <item index="61" class="java.lang.String" itemvalue="simplejson" />
+            <item index="62" class="java.lang.String" itemvalue="pyxdg" />
+            <item index="63" class="java.lang.String" itemvalue="typing" />
+            <item index="64" class="java.lang.String" itemvalue="enum34" />
+            <item index="65" class="java.lang.String" itemvalue="pygobject" />
+            <item index="66" class="java.lang.String" itemvalue="ipaddress" />
+            <item index="67" class="java.lang.String" itemvalue="python-sql" />
+            <item index="68" class="java.lang.String" itemvalue="more-itertools" />
+            <item index="69" class="java.lang.String" itemvalue="pluggy" />
+            <item index="70" class="java.lang.String" itemvalue="funcsigs" />
+            <item index="71" class="java.lang.String" itemvalue="tryton" />
+            <item index="72" class="java.lang.String" itemvalue="pycrypto" />
+            <item index="73" class="java.lang.String" itemvalue="pkginfo" />
+            <item index="74" class="java.lang.String" itemvalue="relatorio" />
+            <item index="75" class="java.lang.String" itemvalue="keyrings.alt" />
+            <item index="76" class="java.lang.String" itemvalue="asn1crypto" />
+            <item index="77" class="java.lang.String" itemvalue="pytest" />
+            <item index="78" class="java.lang.String" itemvalue="twine" />
+            <item index="79" class="java.lang.String" itemvalue="pathlib2" />
+            <item index="80" class="java.lang.String" itemvalue="GooCalendar" />
+            <item index="81" class="java.lang.String" itemvalue="Genshi" />
+            <item index="82" class="java.lang.String" itemvalue="tqdm" />
+            <item index="83" class="java.lang.String" itemvalue="Sphinx" />
+            <item index="84" class="java.lang.String" itemvalue="PyBluez" />
+            <item index="85" class="java.lang.String" itemvalue="polib" />
+            <item index="86" class="java.lang.String" itemvalue="olefile" />
+            <item index="87" class="java.lang.String" itemvalue="keyring" />
+            <item index="88" class="java.lang.String" itemvalue="webencodings" />
+            <item index="89" class="java.lang.String" itemvalue="Pillow" />
+            <item index="90" class="java.lang.String" itemvalue="requests-toolbelt" />
           </list>
         </value>
       </option>
