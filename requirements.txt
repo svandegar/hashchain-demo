@@ -42,7 +42,7 @@ python-dateutil==2.8.0
 python-magic==0.4.15
 python-sql==1.0.0
 pytz==2019.1
-pyxdg==0.25
+pyxdg==0.26
 readme-renderer==24.0
 relatorio==0.8.1
 requests==2.21.0
