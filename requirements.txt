@@ -19,7 +19,7 @@ ipaddress==1.0.22
 Jinja2==2.10.1
 keyring==10.6.0
 keyrings.alt==3.0
-lxml==4.3.2
+lxml==4.6.3
 MarkupSafe==1.1.1
 more-itertools==5.0.0
 olefile==0.45.1
