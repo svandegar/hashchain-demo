@@ -29,7 +29,7 @@ Pillow==6.2.0
 pkginfo==1.5.0.1
 pluggy==0.9.0
 polib==1.1.0
-py==1.8.0
+py==1.10.0
 PyBluez==0.18
 pycairo==1.16.2
 pycrypto==2.6.1
